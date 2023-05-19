@@ -16,11 +16,13 @@
 		618047292A17AE08000584D4 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618047282A17AE08000584D4 /* SplashViewController.swift */; };
 		619479F22A154B82000F822D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619479F12A154B82000F822D /* AppDelegate.swift */; };
 		619479F42A154B82000F822D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619479F32A154B82000F822D /* SceneDelegate.swift */; };
-		619479F62A154B82000F822D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619479F52A154B82000F822D /* ViewController.swift */; };
+		619479F62A154B82000F822D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619479F52A154B82000F822D /* HomeViewController.swift */; };
 		619479F92A154B82000F822D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619479F72A154B82000F822D /* Main.storyboard */; };
 		619479FC2A154B82000F822D /* SportsApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 619479FA2A154B82000F822D /* SportsApp.xcdatamodeld */; };
 		619479FE2A154B84000F822D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 619479FD2A154B84000F822D /* Assets.xcassets */; };
 		61947A012A154B84000F822D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619479FF2A154B84000F822D /* LaunchScreen.storyboard */; };
+		619713192A17D5B900E6A982 /* SportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619713182A17D5B900E6A982 /* SportCollectionViewCell.swift */; };
+		6197131B2A17DFB400E6A982 /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6197131A2A17DFB400E6A982 /* Sport.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,12 +37,14 @@
 		619479EE2A154B82000F822D /* SportsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SportsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		619479F12A154B82000F822D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		619479F32A154B82000F822D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		619479F52A154B82000F822D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		619479F52A154B82000F822D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		619479F82A154B82000F822D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		619479FB2A154B82000F822D /* SportsApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SportsApp.xcdatamodel; sourceTree = "<group>"; };
 		619479FD2A154B84000F822D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61947A002A154B84000F822D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		61947A022A154B84000F822D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		619713182A17D5B900E6A982 /* SportCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportCollectionViewCell.swift; sourceTree = "<group>"; };
+		6197131A2A17DFB400E6A982 /* Sport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sport.swift; sourceTree = "<group>"; };
 		AF85D1A5B60F6B840B90D519 /* Pods-SportsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsApp.release.xcconfig"; path = "Target Support Files/Pods-SportsApp/Pods-SportsApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,7 +73,6 @@
 			isa = PBXGroup;
 			children = (
 				6104CC1B2A17B74E00438674 /* View */,
-				6104CC192A17B74E00438674 /* ViewModel */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -91,13 +94,6 @@
 			path = TeamDetails;
 			sourceTree = "<group>";
 		};
-		6104CC192A17B74E00438674 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		6104CC1A2A17B74E00438674 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +104,8 @@
 		6104CC1B2A17B74E00438674 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				619479F52A154B82000F822D /* HomeViewController.swift */,
+				619713182A17D5B900E6A982 /* SportCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -174,6 +172,7 @@
 			children = (
 				618047242A179FA7000584D4 /* MyResponse.swift */,
 				618047262A179FDF000584D4 /* League.swift */,
+				6197131A2A17DFB400E6A982 /* Sport.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -215,7 +214,6 @@
 				612AF6C72A155BC9003BB291 /* Module */,
 				619479F12A154B82000F822D /* AppDelegate.swift */,
 				619479F32A154B82000F822D /* SceneDelegate.swift */,
-				619479F52A154B82000F822D /* ViewController.swift */,
 				619479FD2A154B84000F822D /* Assets.xcassets */,
 				61947A022A154B84000F822D /* Info.plist */,
 				619479FA2A154B82000F822D /* SportsApp.xcdatamodeld */,
@@ -357,8 +355,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				618047252A179FA7000584D4 /* MyResponse.swift in Sources */,
+				6197131B2A17DFB400E6A982 /* Sport.swift in Sources */,
 				618047272A179FDF000584D4 /* League.swift in Sources */,
-				619479F62A154B82000F822D /* ViewController.swift in Sources */,
+				619479F62A154B82000F822D /* HomeViewController.swift in Sources */,
+				619713192A17D5B900E6A982 /* SportCollectionViewCell.swift in Sources */,
 				619479F22A154B82000F822D /* AppDelegate.swift in Sources */,
 				618047212A179C40000584D4 /* NetworkProtocol.swift in Sources */,
 				619479FC2A154B82000F822D /* SportsApp.xcdatamodeld in Sources */,
