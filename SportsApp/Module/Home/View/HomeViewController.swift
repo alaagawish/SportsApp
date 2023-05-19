@@ -43,7 +43,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return 0.1
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(sports[indexPath.row].name)
+        print(sports[indexPath.row].name.lowercased())
+         
+        if  let leagues = self.storyboard?.instantiateViewController(withIdentifier:  "leagues") as? LeaguesViewController{
+            
+            leagues.sport = sports[indexPath.row].name.lowercased()
+             
+            navigationController?.pushViewController(leagues, animated: true)
+           
+        }
         
     }
 
