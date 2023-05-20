@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import CoreData
 
-class LocalSource{
+class LocalSource: LocalSourceProtocol{
         
     var managedContext: NSManagedObjectContext
     init(){
@@ -18,7 +18,7 @@ class LocalSource{
         
     }
     func insertLeague(l: LeagueLocal){
-        let entity = NSEntityDescription.entity(forEntityName: "League", in: managedContext)
+        let entity = NSEntityDescription.entity(forEntityName: "LeagueLoc", in: managedContext)
         let league = NSManagedObject(entity: entity!, insertInto: managedContext)
         league.setValue(l.name, forKey: "name")
         league.setValue(l.youtube, forKey: "youtube")
@@ -35,7 +35,7 @@ class LocalSource{
     
     func getDataFromLocal() -> [LeagueLocal]{
         var leaguesL: [LeagueLocal] = []
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "League")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueLoc")
         do{
             let leagues = try managedContext.fetch(fetchRequest)
             for i in leagues{
@@ -56,7 +56,7 @@ class LocalSource{
     
     func getLeagueFromLocal(name: String) -> LeagueLocal?{
         var leagueL: LeagueLocal?
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "League")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueLoc")
         
         let myPredicate = NSPredicate(format: "name == %@", name)
         fetchRequest.predicate = myPredicate
@@ -78,7 +78,7 @@ class LocalSource{
     
     func getDeleteFromLocal(name: String) {
        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "League")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueLoc")
         
         let myPredicate = NSPredicate(format: "name == %@", name)
         fetchRequest.predicate = myPredicate
