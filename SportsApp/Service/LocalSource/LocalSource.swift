@@ -76,7 +76,7 @@ class LocalSource: LocalSourceProtocol{
         return leagueL ?? nil
     }
     
-    func getDeleteFromLocal(name: String) {
+    func deleteFromLocal(name: String) {
        
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueLoc")
         

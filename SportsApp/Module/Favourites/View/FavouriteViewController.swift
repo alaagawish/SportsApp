@@ -10,29 +10,62 @@ import UIKit
 class FavouriteViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var favouriteTable: UITableView!
+    
+    var leagues: [LeagueLocal] = []
+    var favouriteViewModel: FavouriteViewModel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        favouriteViewModel = FavouriteViewModel(localSource: LocalSource())
 
-        // Do any additional setup after loading the view.
-        
         favouriteTable.register(UINib(nibName: "LeagueTableViewCell", bundle: nil), forCellReuseIdentifier: "leagueCell")
+        
+      
+        favouriteViewModel.refreshFavouriteLeagues = {
+            [weak self] in
+            DispatchQueue.main.async {
+                self?.leagues = self?.favouriteViewModel.leagues ?? []
+                self?.favouriteTable.reloadData()
+            }
+        }
+        let _ = favouriteViewModel.getLeagues()
     }
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return leagues.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "leagueCell", for: indexPath) as! LeagueTableViewCell
+         
+        
+        cell.leagueName.text = leagues[indexPath.row].name
+
+        let url = URL(string: leagues[indexPath.row].logo)
+        cell.leagueImage.kf.setImage(with: url,
+                              placeholder: UIImage(named: "cup"))
         
         
         return cell
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: <#T##CGFloat#>, height: <#T##CGFloat#>)
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: self.view.frame.width, height: 50)
+    }
   
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CGFloat(70)
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        favouriteViewModel.returnFavouriteLeague = {
+            [weak self] in
+            DispatchQueue.main.async {
+                print("selected item is \(self?.favouriteViewModel.league?.name ?? "")")
+            }
+
+        }
+        let _ = favouriteViewModel.getSelectedLeague(name: leagues[indexPath.row].name)
+    }
 }
