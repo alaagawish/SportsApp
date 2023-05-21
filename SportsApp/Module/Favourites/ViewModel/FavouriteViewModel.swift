@@ -35,13 +35,13 @@ class FavouriteViewModel{
         return leagues ?? []
     }
     
-    func deleteLeague(name: String){
-        localSource.deleteFromLocal(name: name)
+    func deleteLeague(name: String, key: Int){
+        localSource.deleteFromLocal(name: name, key: key)
         let _ = getLeagues()
     }
     
-    func getSelectedLeague(name: String) -> LeagueLocal{
-        league = localSource.getLeagueFromLocal(name: name)
+    func getSelectedLeague(name: String, key: Int) -> LeagueLocal{
+        league = localSource.getLeagueFromLocal(name: name, key: key)
         print("Return selected league")
         returnFavouriteLeague()
         return league!

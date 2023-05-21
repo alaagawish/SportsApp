@@ -404,6 +404,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionDetails" destination="mvW-aG-PA8" id="3is-a6-780"/>
+                        <outlet property="favButton" destination="tCc-tX-TFH" id="chW-ye-F6x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bKb-1q-8Xi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -413,14 +414,55 @@
         <!--Team Details View Controller-->
         <scene sceneID="HHF-Zt-5VQ">
             <objects>
-                <viewController id="bN6-li-OTM" customClass="TeamDetailsViewController" customModule="SportsApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="teamDetails" id="bN6-li-OTM" customClass="TeamDetailsViewController" customModule="SportsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cXp-1J-uQY">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPe-tM-ZKC">
+                                <rect key="frame" x="8" y="302.66666666666669" width="393" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="Dqx-pO-mFp"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="djx-Tn-IUb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemGray2Color"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noImg" translatesAutoresizingMaskIntoConstraints="NO" id="onK-Fw-uCN">
+                                <rect key="frame" x="8" y="66.999999999999986" width="377" height="227.66666666666663"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FhR-P5-pp3">
+                                <rect key="frame" x="8" y="335.66666666666669" width="377" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="Rdh-Gq-0Ge"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="8jT-qK-M0S"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sPe-tM-ZKC" firstAttribute="trailing" secondItem="8jT-qK-M0S" secondAttribute="trailing" constant="8" id="4bI-bO-IXc"/>
+                            <constraint firstItem="FhR-P5-pp3" firstAttribute="top" secondItem="sPe-tM-ZKC" secondAttribute="bottom" constant="8" id="NJS-Em-iQ8"/>
+                            <constraint firstItem="onK-Fw-uCN" firstAttribute="top" secondItem="8jT-qK-M0S" secondAttribute="top" constant="8" id="QSz-cO-3ho"/>
+                            <constraint firstItem="8jT-qK-M0S" firstAttribute="trailing" secondItem="onK-Fw-uCN" secondAttribute="trailing" constant="8" id="VCa-c4-PdZ"/>
+                            <constraint firstItem="8jT-qK-M0S" firstAttribute="trailing" secondItem="FhR-P5-pp3" secondAttribute="trailing" constant="8" id="XWh-jc-9fZ"/>
+                            <constraint firstItem="onK-Fw-uCN" firstAttribute="leading" secondItem="8jT-qK-M0S" secondAttribute="leading" constant="8" id="euu-FH-n7j"/>
+                            <constraint firstItem="onK-Fw-uCN" firstAttribute="height" secondItem="8jT-qK-M0S" secondAttribute="height" multiplier="0.3" id="faa-t5-jwy"/>
+                            <constraint firstItem="sPe-tM-ZKC" firstAttribute="top" secondItem="onK-Fw-uCN" secondAttribute="bottom" constant="8" id="oG7-fe-CVf"/>
+                            <constraint firstItem="sPe-tM-ZKC" firstAttribute="leading" secondItem="8jT-qK-M0S" secondAttribute="leading" constant="8" id="rm3-dT-bMX"/>
+                            <constraint firstItem="FhR-P5-pp3" firstAttribute="leading" secondItem="8jT-qK-M0S" secondAttribute="leading" constant="8" id="yo2-mp-pJo"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WEU-0x-IEd"/>
+                    <connections>
+                        <outlet property="teamImage" destination="onK-Fw-uCN" id="O3N-Cd-a4M"/>
+                        <outlet property="teamName" destination="FhR-P5-pp3" id="xa3-HC-912"/>
+                        <outlet property="teamSportName" destination="sPe-tM-ZKC" id="1MD-a5-Yox"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ovj-Yk-Yrh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -485,11 +527,15 @@
     <resources>
         <image name="arrowshape.turn.up.backward" catalog="system" width="128" height="104"/>
         <image name="heart" catalog="system" width="128" height="107"/>
+        <image name="noImg" width="512" height="512"/>
         <image name="soccerball" catalog="system" width="128" height="123"/>
         <image name="suit.heart.fill" catalog="system" width="128" height="107"/>
         <image name="vs" width="626" height="357"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

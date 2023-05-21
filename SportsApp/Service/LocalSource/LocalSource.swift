@@ -54,11 +54,11 @@ class LocalSource: LocalSourceProtocol{
         return leaguesL
     }
     
-    func getLeagueFromLocal(name: String) -> LeagueLocal?{
+    func getLeagueFromLocal(name: String,key: Int) -> LeagueLocal?{
         var leagueL: LeagueLocal?
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueLoc")
         
-        let myPredicate = NSPredicate(format: "name == %@", name)
+        let myPredicate = NSPredicate(format: "name == %@ and key == %f", name, key)
         fetchRequest.predicate = myPredicate
         do{
             let leagues = try managedContext.fetch(fetchRequest)
@@ -76,11 +76,11 @@ class LocalSource: LocalSourceProtocol{
         return leagueL ?? nil
     }
     
-    func deleteFromLocal(name: String) {
+    func deleteFromLocal(name: String, key: Int) {
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueLoc")
         
-        let myPredicate = NSPredicate(format: "name == %@", name)
+        let myPredicate = NSPredicate(format: "name == %@ and key == %f", name, key)
         fetchRequest.predicate = myPredicate
         do{
             let leagues = try managedContext.fetch(fetchRequest)

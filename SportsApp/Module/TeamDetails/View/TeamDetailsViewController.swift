@@ -6,24 +6,28 @@
 //
 
 import UIKit
+import Kingfisher
 
 class TeamDetailsViewController: UIViewController {
-
+    
+    @IBOutlet weak var teamImage: UIImageView!
+    
+    @IBOutlet weak var teamSportName: UILabel!
+    
+    @IBOutlet weak var teamName: UILabel!
+    
+    var team: Team!
+    var sport: String!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        teamName.text = team.teamName
+        let url = URL(string: team.teamLogo ?? "")
+        teamImage.kf.setImage(with: url,
+                              placeholder: UIImage(named: "noImg"))
+        teamSportName.text = sport.capitalized + " Team"
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

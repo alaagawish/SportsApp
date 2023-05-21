@@ -11,7 +11,7 @@ protocol LocalSourceProtocol{
     
     func getDataFromLocal() -> [LeagueLocal]
     
-    func getLeagueFromLocal(name: String) -> LeagueLocal?
+    func getLeagueFromLocal(name: String, key: Int)  -> LeagueLocal?
     
-    func deleteFromLocal(name: String)
+    func deleteFromLocal(name: String, key: Int)
 }

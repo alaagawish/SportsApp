@@ -11,6 +11,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
     
     @IBOutlet weak var collectionDetails: UICollectionView!
     
+    @IBOutlet weak var favButton: UIBarButtonItem!
     var leagueDetailsViewModel: LeagueDetailsViewModel!
     var upComing: [Event] = []
     var latest: [Event] = []
@@ -44,7 +45,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
                 
                 self?.upComing = self?.leagueDetailsViewModel.upComingEvents ?? []
                 print(self?.upComing[0].eventDay ?? "cant get date in upcoming")
-               
+                
                 self?.collectionDetails.reloadData()
             }
         }
@@ -55,7 +56,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
                 
                 self?.latest = self?.leagueDetailsViewModel.latestEvents ?? []
                 print(self?.latest[0].eventDay ?? "cant get date in latest")
-               
+                
                 self?.collectionDetails.reloadData()
             }
         }
@@ -139,7 +140,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         }else if section == 1 {
             return latest.count
         }else{
-             teams = []
+            teams = []
             for item in upComing {
                 self.teams.append(Team(teamLogo: item.awayTeamLogo, teamName: item.eventAwayTeam, teamKey: item.awayTeamKey))
                 self.teams.append(Team(teamLogo: item.homeTeamLogo, teamName: item.eventHomeTeam, teamKey: item.homeTeamKey))
@@ -201,12 +202,33 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
     
     
     @IBAction func favButton(_ sender: UIBarButtonItem) {
-        
+        print("fav")
+        if favButton.image == UIImage(systemName: "heart") {
+            print("heart")
+            let img = UIImage(systemName: "heart.fill")
+
+            favButton.image = img
+        }else{
+            print("heart fill")
+            let img = UIImage(systemName: "heart")
+            favButton.image = img
+            
+
+        }
         
     }
     
     @IBAction func backButton(_ sender: Any) {
         
         dismiss(animated: true)
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let teamDetails = self.storyboard?.instantiateViewController(withIdentifier: "teamDetails") as! TeamDetailsViewController
+        teamDetails.modalPresentationStyle = .fullScreen
+        teamDetails.modalTransitionStyle = .crossDissolve
+        teamDetails.sport = sport
+        teamDetails.team = teams[indexPath.row]
+        present(teamDetails, animated: true)
     }
 }

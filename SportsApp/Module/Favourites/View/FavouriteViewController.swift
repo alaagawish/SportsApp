@@ -66,17 +66,18 @@ class FavouriteViewController: UIViewController, UITableViewDataSource, UITableV
             }
             
         }
-        let _ = favouriteViewModel.getSelectedLeague(name: leagues[indexPath.row].name)
+        let _ = favouriteViewModel.getSelectedLeague(name: leagues[indexPath.row].name,
+                                                     key: self.leagues[indexPath.row].key )
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        let alert : UIAlertController = UIAlertController(title: "Delete League from faavourites", message: "ARE YOU SURE TO DELETE?", preferredStyle: .alert)
+        let alert : UIAlertController = UIAlertController(title: "Delete League from favourites", message: "ARE YOU SURE TO DELETE?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "YES", style: .default,handler: { [weak self] action in
             print("delete begin")
             self?.leagues.remove(at: indexPath.row)
-            self?.favouriteViewModel.deleteLeague(name: self?.leagues[indexPath.row].name ?? "")
+            self?.favouriteViewModel.deleteLeague(name: self?.leagues[indexPath.row].name ?? "", key: self?.leagues[indexPath.row].key ?? 0)
             self?.favouriteTable.reloadData()
             
         }))
