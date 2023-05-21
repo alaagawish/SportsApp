@@ -362,12 +362,25 @@
                                         <outlet property="headerTitle" destination="UB1-FG-27I" id="rzd-De-AxE"/>
                                     </connections>
                                 </collectionReusableView>
+                                <connections>
+                                    <outlet property="dataSource" destination="nZt-D0-kIk" id="j8D-ft-guy"/>
+                                    <outlet property="delegate" destination="nZt-D0-kIk" id="mHJ-dT-fZr"/>
+                                </connections>
                             </collectionView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e8p-O2-Xas">
                                 <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                                 <items>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.backward" catalog="system" id="bbb-Ft-Za6">
+                                        <connections>
+                                            <action selector="backButton:" destination="nZt-D0-kIk" id="GyJ-Or-6By"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="0c1-ch-Dvt"/>
-                                    <barButtonItem title="Item" image="heart" catalog="system" id="tCc-tX-TFH"/>
+                                    <barButtonItem title="Item" image="heart" catalog="system" id="tCc-tX-TFH">
+                                        <connections>
+                                            <action selector="favButton:" destination="nZt-D0-kIk" id="1HB-dH-McI"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -471,6 +484,7 @@
         <segue reference="udO-Uv-hqr"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="arrowshape.turn.up.backward" catalog="system" width="128" height="104"/>
         <image name="heart" catalog="system" width="128" height="107"/>
         <image name="soccerball" catalog="system" width="128" height="123"/>
         <image name="suit.heart.fill" catalog="system" width="128" height="107"/>

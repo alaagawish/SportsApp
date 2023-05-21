@@ -39,6 +39,7 @@
 		619713302A181A7B00E6A982 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6197132F2A181A7B00E6A982 /* Event.swift */; };
 		619713332A18234B00E6A982 /* LeaguesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619713322A18234B00E6A982 /* LeaguesViewModel.swift */; };
 		619713352A183FAA00E6A982 /* LocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619713342A183FAA00E6A982 /* LocalSource.swift */; };
+		61C80CA32A199F2700B94994 /* LeagueDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C80CA22A199F2700B94994 /* LeagueDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +78,7 @@
 		6197132F2A181A7B00E6A982 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		619713322A18234B00E6A982 /* LeaguesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaguesViewModel.swift; sourceTree = "<group>"; };
 		619713342A183FAA00E6A982 /* LocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSource.swift; sourceTree = "<group>"; };
+		61C80CA22A199F2700B94994 /* LeagueDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueDetailsViewModel.swift; sourceTree = "<group>"; };
 		AF85D1A5B60F6B840B90D519 /* Pods-SportsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsApp.release.xcconfig"; path = "Target Support Files/Pods-SportsApp/Pods-SportsApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -305,6 +307,7 @@
 		6197132A2A17F5D300E6A982 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				61C80CA22A199F2700B94994 /* LeagueDetailsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				618047212A179C40000584D4 /* NetworkProtocol.swift in Sources */,
 				616A02B02A19968E005ADB80 /* HeaderCollectionReusableView.swift in Sources */,
 				619479FC2A154B82000F822D /* SportsApp.xcdatamodeld in Sources */,
+				61C80CA32A199F2700B94994 /* LeagueDetailsViewModel.swift in Sources */,
 				619479F42A154B82000F822D /* SceneDelegate.swift in Sources */,
 				618047232A179C97000584D4 /* Network.swift in Sources */,
 				616A02AC2A197F28005ADB80 /* TeamDetailsViewController.swift in Sources */,

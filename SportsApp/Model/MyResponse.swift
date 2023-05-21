@@ -12,3 +12,8 @@ struct MyResponse: Decodable{
     let success: Int
     let result: [League]
 }
+
+struct EventResponse: Decodable{
+    let success: Int
+    let result: [Event]
+}
