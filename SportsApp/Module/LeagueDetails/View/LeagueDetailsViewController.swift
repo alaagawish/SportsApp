@@ -63,7 +63,13 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
                 
                 self?.latest = self?.leagueDetailsViewModel.latestEvents ?? []
                 print(self?.latest[0].eventDay ?? "cant get date in latest")
-                
+                if self?.upComing.count == 0 && self?.latest.count == 0 {
+                    self?.collectionDetails.isHidden = true
+                    self?.imgNoItems.isHidden = false
+                }else{
+                    self?.imgNoItems.isHidden = true
+                    self?.collectionDetails.isHidden = false
+                }
                 self?.collectionDetails.reloadData()
             }
         }
@@ -81,13 +87,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
             }
         }
         
-        if upComing.count == 0 && latest.count == 0 {
-            collectionDetails.isHidden = true
-            imgNoItems.isHidden = false
-        }else{
-            imgNoItems.isHidden = true
-            collectionDetails.isHidden = false
-        }
+        
     }
     func drawUpComingSection() -> NSCollectionLayoutSection{
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
@@ -221,7 +221,13 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
+        if  upComing.count == 0 && latest.count == 0 {
+            collectionDetails.isHidden = true
+            imgNoItems.isHidden = false
+        }else{
+            imgNoItems.isHidden = true
+            collectionDetails.isHidden = false
+        }
         return 3
     }
     
