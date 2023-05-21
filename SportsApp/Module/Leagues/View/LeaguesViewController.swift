@@ -63,6 +63,7 @@ class LeaguesViewController: UIViewController, UITableViewDataSource, UITableVie
         //        leagueDetails.modalTransitionStyle = .crossDissolve
         leagueDetails.sport = sport
         leagueDetails.leagueID = leagues[indexPath.row].leagueKey
+        leagueDetails.leagueDisplaying = LeagueLocal(sport: sport ?? "", youtube: "", name: leagues[indexPath.row].leagueName ?? "", logo: leagues[indexPath.row].leagueLogo ?? "" , key: leagues[indexPath.row].leagueKey ?? 0)
         present(leagueDetails, animated: true)
     }
     

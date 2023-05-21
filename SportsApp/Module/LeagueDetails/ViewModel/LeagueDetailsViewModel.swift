@@ -28,7 +28,9 @@ class LeagueDetailsViewModel{
             teamArrayToViewController()
         }
     }
-    init(sport: String, leagueId: Int ) {
+    var localSource: LocalSourceProtocol
+    init(sport: String, leagueId: Int, localSource: LocalSourceProtocol) {
+        self.localSource = localSource
         self.sport = sport
         self.leagueId = leagueId
     }
@@ -90,12 +92,18 @@ class LeagueDetailsViewModel{
             self?.latestEvents = myResponse.result
         }
     }
-    func getTeams(){
+    
+    func deleteLeague(name: String, key: Int){
+        localSource.deleteFromLocal(name: name, key: key)
+    }
+    
+    func getSelectedLeague(name: String, key: Int) -> LeagueLocal?{
+        print("Return selected league")
         
-        //        Network.getData(path: "", sport: sport ?? "") { [weak self] (myResponse: MyResponse!) in
-        //
-        //            self?.leagues = myResponse.result
-        //        }
+        return localSource.getLeagueFromLocal(name: name, key: key) ?? nil
+    }
+    func addToFav(l: LeagueLocal){
+        localSource.insertLeague(l: l)
     }
     
 }

@@ -79,15 +79,18 @@ class LocalSource: LocalSourceProtocol{
     func deleteFromLocal(name: String, key: Int) {
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueLoc")
-        
-        let myPredicate = NSPredicate(format: "name == %@ and key == %f", name, key)
+       
+        let myPredicate = NSPredicate(format: "key == %d", key)
+//        let myPredicate = NSPredicate(format: "name == %@ and key == %d", name, key)
         fetchRequest.predicate = myPredicate
         do{
             let leagues = try managedContext.fetch(fetchRequest)
-            managedContext.delete(leagues[0])
-            try managedContext.save()
-            print("\nDelete league done...\n")
-            
+            print(leagues.count)
+            if leagues.count > 0{
+                managedContext.delete(leagues[0])
+                try managedContext.save()
+                print("\nDelete league done...\n")
+            }
         }catch let error as NSError{
             print("\nerror in deleteting a league : \(error)\n")
         }

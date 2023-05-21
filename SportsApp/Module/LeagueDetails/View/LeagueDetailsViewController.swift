@@ -17,7 +17,9 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
     var latest: [Event] = []
     var sport: String!
     var leagueID: Int!
+    var leagueDisplaying: LeagueLocal!
     var teams: [Team] = []
+    var img =  UIImage(systemName: "heart")
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +39,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         
         collectionDetails.setCollectionViewLayout(layout, animated: true)
         
-        leagueDetailsViewModel = LeagueDetailsViewModel(sport: sport,leagueId: leagueID)
+        leagueDetailsViewModel = LeagueDetailsViewModel(sport: sport,leagueId: leagueID, localSource: LocalSource())
         
         leagueDetailsViewModel.upComingArrayToViewController = {
             [weak self ] in
@@ -62,6 +64,9 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         }
         leagueDetailsViewModel.getUpComingEvents()
         leagueDetailsViewModel.getLatestEvents()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        favButton.image = img
     }
     func drawUpComingSection() -> NSCollectionLayoutSection{
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
@@ -204,16 +209,27 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
     @IBAction func favButton(_ sender: UIBarButtonItem) {
         print("fav")
         if favButton.image == UIImage(systemName: "heart") {
-            print("heart")
+            print("added to fav from leg details vc")
             let img = UIImage(systemName: "heart.fill")
-
+            leagueDetailsViewModel.addToFav(l: leagueDisplaying)
             favButton.image = img
         }else{
-            print("heart fill")
-            let img = UIImage(systemName: "heart")
-            favButton.image = img
             
-
+                
+                let alert : UIAlertController = UIAlertController(title: "Delete League from favourites", message: "ARE YOU SURE TO DELETE?", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "YES", style: .default,handler: { [weak self] action in
+                    print("delete begin")
+                    print("heart fill")
+                    let img = UIImage(systemName: "heart")
+                    self?.favButton.image = img
+                    self?.leagueDetailsViewModel.deleteLeague(name: self?.leagueDisplaying.name ?? "", key: (self?.leagueDisplaying.key ?? 0))
+                    
+                }))
+                alert.addAction(UIAlertAction(title: "NO", style: .cancel,handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            
+            
         }
         
     }
@@ -222,6 +238,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         
         dismiss(animated: true)
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 2{
             let teamDetails = self.storyboard?.instantiateViewController(withIdentifier: "teamDetails") as! TeamDetailsViewController
