@@ -44,4 +44,5 @@ struct Event: Decodable{
         case finalResult = "event_final_result"
     }
     
+    
 }

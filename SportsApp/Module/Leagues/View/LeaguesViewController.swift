@@ -57,10 +57,10 @@ class LeaguesViewController: UIViewController, UITableViewDataSource, UITableVie
         return CGFloat(70)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        self.performSegue(withIdentifier: "leagueDetails", sender: nil)
+
         let leagueDetails = self.storyboard?.instantiateViewController(withIdentifier: "detailsOfLeague") as! LeagueDetailsViewController
         leagueDetails.modalPresentationStyle = .fullScreen
-        //        leagueDetails.modalTransitionStyle = .crossDissolve
+      
         leagueDetails.sport = sport
         leagueDetails.leagueID = leagues[indexPath.row].leagueKey
         present(leagueDetails, animated: true)

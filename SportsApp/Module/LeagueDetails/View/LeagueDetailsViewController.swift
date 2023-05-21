@@ -10,12 +10,13 @@ import UIKit
 class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionDetails: UICollectionView!
+    
     var leagueDetailsViewModel: LeagueDetailsViewModel!
     var upComing: [Event] = []
     var latest: [Event] = []
     var sport: String!
     var leagueID: Int!
-    var teams: [Int] = []
+    var teams: [Team] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,8 +35,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         }
         
         collectionDetails.setCollectionViewLayout(layout, animated: true)
-             
-        print("\n\n\n\n\\n\n\n\n\\n\n\n\n\n\n\n\n\n\n\n\n\nwwwwww")
+        
         leagueDetailsViewModel = LeagueDetailsViewModel(sport: sport,leagueId: leagueID)
         
         leagueDetailsViewModel.upComingArrayToViewController = {
@@ -44,6 +44,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
                 
                 self?.upComing = self?.leagueDetailsViewModel.upComingEvents ?? []
                 print(self?.upComing[0].eventDay ?? "cant get date in upcoming")
+               
                 self?.collectionDetails.reloadData()
             }
         }
@@ -54,6 +55,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
                 
                 self?.latest = self?.leagueDetailsViewModel.latestEvents ?? []
                 print(self?.latest[0].eventDay ?? "cant get date in latest")
+               
                 self?.collectionDetails.reloadData()
             }
         }
@@ -69,7 +71,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 16, trailing: 0)
-   
+        
         section.visibleItemsInvalidationHandler = { (items, offset, environment) in
             items.forEach { item in
                 let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
@@ -137,8 +139,17 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         }else if section == 1 {
             return latest.count
         }else{
-            return 5
-            //            return teams.count
+             teams = []
+            for item in upComing {
+                self.teams.append(Team(teamLogo: item.awayTeamLogo, teamName: item.eventAwayTeam, teamKey: item.awayTeamKey))
+                self.teams.append(Team(teamLogo: item.homeTeamLogo, teamName: item.eventHomeTeam, teamKey: item.homeTeamKey))
+            }
+            for item in latest {
+                self.teams.append(Team(teamLogo: item.awayTeamLogo, teamName: item.eventAwayTeam, teamKey: item.awayTeamKey))
+                self.teams.append(Team(teamLogo: item.homeTeamLogo, teamName: item.eventHomeTeam, teamKey: item.homeTeamKey))
+            }
+            teams = Array(Set(teams))
+            return teams.count
         }
     }
     
@@ -157,7 +168,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
             return cell
         }else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "teamCell", for: indexPath) as! TeamsCollectionViewCell
-            cell.setValues(teamName: "hhh", teamLogo: "")
+            cell.setValues(teamName: teams[indexPath.row].teamName ?? "", teamLogo: teams[indexPath.row].teamLogo ?? "")
             return cell
         }
         
@@ -176,7 +187,6 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
             }else{
                 header.headerTitle.text = "Teams"
             }
-            
             
             return header
         }
