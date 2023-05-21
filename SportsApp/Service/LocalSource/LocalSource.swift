@@ -10,11 +10,11 @@ import UIKit
 import CoreData
 
 class LocalSource: LocalSourceProtocol{
-        
+    
     var managedContext: NSManagedObjectContext
     init(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-         managedContext = appDelegate.persistentContainer.viewContext
+        managedContext = appDelegate.persistentContainer.viewContext
         
     }
     func insertLeague(l: LeagueLocal){
@@ -54,21 +54,25 @@ class LocalSource: LocalSourceProtocol{
         return leaguesL
     }
     
-    func getLeagueFromLocal(name: String) -> LeagueLocal?{
+    func getLeagueFromLocal(name: String,key: Int) -> LeagueLocal?{
         var leagueL: LeagueLocal?
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueLoc")
         
-        let myPredicate = NSPredicate(format: "name == %@", name)
+        let myPredicate = NSPredicate(format: "name == %@ and key == %d", name, key)
         fetchRequest.predicate = myPredicate
         do{
             let leagues = try managedContext.fetch(fetchRequest)
-            let i = leagues[0]
-            leagueL = LeagueLocal(sport: i.value(forKey: "sport") as! String,
+            if leagues.count > 0{
+                let i = leagues[0]
+                leagueL = LeagueLocal(sport: i.value(forKey: "sport") as! String,
                                       youtube: i.value(forKey: "youtube") as! String,
                                       name: i.value(forKey: "name") as! String ,
                                       logo: i.value(forKey: "logo") as! String,
                                       key: i.value(forKey: "key") as! Int)
-            print("\nGetting league done...\n")
+                print("\nGetting league done...\n")
+            }else{
+                print("no such itemmmmmmå")
+            }
         }catch let error as NSError{
             print("\nerror in fetching all leagues: \(error)\n")
         }
@@ -76,23 +80,25 @@ class LocalSource: LocalSourceProtocol{
         return leagueL ?? nil
     }
     
-    func deleteFromLocal(name: String) {
-       
+    func deleteFromLocal(name: String, key: Int) {
+        
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueLoc")
         
-        let myPredicate = NSPredicate(format: "name == %@", name)
+        let myPredicate = NSPredicate(format: "key == %d", key)
+        //        let myPredicate = NSPredicate(format: "name == %@ and key == %d", name, key)
         fetchRequest.predicate = myPredicate
         do{
             let leagues = try managedContext.fetch(fetchRequest)
-            managedContext.delete(leagues[0])
-            try managedContext.save()
-            print("\nDelete league done...\n")
-               
+            print(leagues.count)
+            if leagues.count > 0{
+                managedContext.delete(leagues[0])
+                try managedContext.save()
+                print("\nDelete league done...\n")
+            }
         }catch let error as NSError{
             print("\nerror in deleteting a league : \(error)\n")
         }
-        
-       
+    
     }
- 
+    
 }

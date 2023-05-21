@@ -15,7 +15,7 @@ class League: Decodable{
     var leagueLogo: String?
     var countryLogo: String?
     
-
+    
     enum CodingKeys: String, CodingKey{
         case leagueKey = "league_key"
         case leagueName = "league_name"

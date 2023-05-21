@@ -12,14 +12,14 @@ class FavouriteViewModel{
     var leagues: [LeagueLocal]?{
         didSet{
             print("Refreshing fav table")
-//            refreshFavouriteLeagues()
+                        refreshFavouriteLeagues()
         }
     }
     var returnFavouriteLeague: (()->()) = {}
     var league: LeagueLocal?{
         didSet{
             print("Return selected league")
-//            returnFavouriteLeague()
+                        returnFavouriteLeague()
         }
     }
     
@@ -31,19 +31,17 @@ class FavouriteViewModel{
     func getLeagues() -> [LeagueLocal]{
         leagues = localSource.getDataFromLocal()
         print("Refreshing fav table")
-        refreshFavouriteLeagues()
-       return leagues ?? []
+        return leagues ?? []
     }
     
-    func deleteLeague(name: String){
-        localSource.deleteFromLocal(name: name)
+    func deleteLeague(name: String, key: Int){
+        localSource.deleteFromLocal(name: name, key: key)
         let _ = getLeagues()
     }
     
-    func getSelectedLeague(name: String) -> LeagueLocal{
-        league = localSource.getLeagueFromLocal(name: name)
+    func getSelectedLeague(name: String, key: Int) -> LeagueLocal{
+        league = localSource.getLeagueFromLocal(name: name, key: key)
         print("Return selected league")
-        returnFavouriteLeague()
         return league!
     }
 }
