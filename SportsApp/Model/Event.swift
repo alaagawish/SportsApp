@@ -23,6 +23,7 @@ struct Event: Decodable{
     let leagueName: String?
     let eventStadium: String?
     let leagueSeason: String?
+    let finalResult: String?
     
     enum CodingKeys: String, CodingKey{
         case eventKey = "event_key"
@@ -40,6 +41,7 @@ struct Event: Decodable{
         case leagueKey = "league_key"
         case eventStadium = "event_stadium"
         case leagueSeason = "league_season"
+        case finalResult = "event_final_result"
     }
     
 }
