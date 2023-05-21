@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Reachability
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -16,8 +17,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var myCollection: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         
     }
     
@@ -43,14 +42,40 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return 0.1
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(sports[indexPath.row].name.lowercased())
         
-        if  let leagues = self.storyboard?.instantiateViewController(withIdentifier:  "leagues") as? LeaguesViewController{
+        let reachability = try! Reachability()
+        if reachability.connection != .unavailable {
+            print("Network is available")
+            print(sports[indexPath.row].name.lowercased())
             
-            leagues.sport = sports[indexPath.row].name.lowercased()
+            if  let leagues = self.storyboard?.instantiateViewController(withIdentifier:  "leagues") as? LeaguesViewController{
+                
+                leagues.sport = sports[indexPath.row].name.lowercased()
+                
+                navigationController?.pushViewController(leagues, animated: true)
+                
+            }
             
-            navigationController?.pushViewController(leagues, animated: true)
+        } else {
+            print("Network is not available")
+            //alert
+            let alert : UIAlertController = UIAlertController(title: "Internet Connection", message: "Check connection and try again", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel,handler: nil))
+            self.present(alert, animated: true, completion: nil)
             
+        }
+        
+        reachability.whenReachable = { reachability in
+            print("Network is available")
+        }
+        reachability.whenUnreachable = { reachability in
+            print("Network is not available")
+            
+        }
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
         }
         
     }

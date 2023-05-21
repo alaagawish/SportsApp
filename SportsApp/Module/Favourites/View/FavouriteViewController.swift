@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Reachability
 
 class FavouriteViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -68,15 +69,46 @@ class FavouriteViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(70)
     }
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let leagueDetails = self.storyboard?.instantiateViewController(withIdentifier: "detailsOfLeague") as! LeagueDetailsViewController
-        leagueDetails.modalPresentationStyle = .fullScreen
         
-        leagueDetails.img = UIImage(systemName: "heart.fill")
-        leagueDetails.sport = leagues[indexPath.row].sport
-        leagueDetails.leagueID = leagues[indexPath.row].key
-        leagueDetails.leagueDisplaying = LeagueLocal(sport: leagues[indexPath.row].sport , youtube: "", name: leagues[indexPath.row].name , logo: leagues[indexPath.row].logo , key: leagues[indexPath.row].key )
-        present(leagueDetails, animated: true)
+        let reachability = try! Reachability()
+        if reachability.connection != .unavailable {
+            print("Network is available")
+            let leagueDetails = self.storyboard?.instantiateViewController(withIdentifier: "detailsOfLeague") as! LeagueDetailsViewController
+            leagueDetails.modalPresentationStyle = .fullScreen
+            
+            leagueDetails.img = UIImage(systemName: "heart.fill")
+            leagueDetails.sport = leagues[indexPath.row].sport
+            leagueDetails.leagueID = leagues[indexPath.row].key
+            leagueDetails.leagueDisplaying = LeagueLocal(sport: leagues[indexPath.row].sport , youtube: "", name: leagues[indexPath.row].name , logo: leagues[indexPath.row].logo , key: leagues[indexPath.row].key )
+            present(leagueDetails, animated: true)
+            
+        } else {
+            print("Network is not available")
+            //alert
+            let alert : UIAlertController = UIAlertController(title: "Internet Connection", message: "Check connection and try again", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel,handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            
+            
+        }
+        
+        reachability.whenReachable = { reachability in
+            print("Network is available")
+        }
+        reachability.whenUnreachable = { reachability in
+            print("Network is not available")
+            
+        }
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
