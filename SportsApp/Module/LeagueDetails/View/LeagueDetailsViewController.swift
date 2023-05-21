@@ -19,7 +19,8 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
     var leagueID: Int!
     var leagueDisplaying: LeagueLocal!
     var teams: [Team] = []
-    var img =  UIImage(systemName: "heart")
+    var img = UIImage(systemName: "heart")
+    var imgNoItems: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,6 +37,10 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
                 return self.drawTeamsSection()
             }
         }
+        imgNoItems = UIImageView(frame: CGRect(x: 0, y: (self.view.frame.height - self.view.frame.width)/2, width: self.view.frame.width , height: self.view.frame.width ))
+        imgNoItems.image = UIImage(named: "nodata")
+        self.view.addSubview(imgNoItems)
+        imgNoItems.isHidden = true
         
         collectionDetails.setCollectionViewLayout(layout, animated: true)
         
@@ -67,6 +72,22 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
     }
     override func viewWillAppear(_ animated: Bool) {
         favButton.image = img
+        if  img == UIImage(systemName: "heart") {
+            let isFav =  leagueDetailsViewModel.getSelectedLeague(name: leagueDisplaying.name, key: leagueDisplaying.key)
+            if isFav == nil {
+                favButton.image =  UIImage(systemName: "heart")
+            }else{
+                favButton.image =  UIImage(systemName: "heart.fill")
+            }
+        }
+        
+        if upComing.count == 0 && latest.count == 0 {
+            collectionDetails.isHidden = true
+            imgNoItems.isHidden = false
+        }else{
+            imgNoItems.isHidden = true
+            collectionDetails.isHidden = false
+        }
     }
     func drawUpComingSection() -> NSCollectionLayoutSection{
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
@@ -103,10 +124,10 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 32)
         let section = NSCollectionLayoutSection(group: group)
-        // section.orthogonalScrollingBehavior = .continuous
+        
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 16, trailing: 0)
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(25)) // Set the header size
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(25))
         let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         
         section.boundarySupplementaryItems = [headerSupplementary]
@@ -132,7 +153,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
                 item.transform = CGAffineTransform(scaleX: scale, y: scale)
             }
         }
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(25)) // Set the header size
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(25))
         let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         
         section.boundarySupplementaryItems = [headerSupplementary]
@@ -199,7 +220,6 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         return UICollectionReusableView()
     }
     
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         
         return 3
@@ -215,21 +235,18 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
             favButton.image = img
         }else{
             
-                
-                let alert : UIAlertController = UIAlertController(title: "Delete League from favourites", message: "ARE YOU SURE TO DELETE?", preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "YES", style: .default,handler: { [weak self] action in
-                    print("delete begin")
-                    print("heart fill")
-                    let img = UIImage(systemName: "heart")
-                    self?.favButton.image = img
-                    self?.leagueDetailsViewModel.deleteLeague(name: self?.leagueDisplaying.name ?? "", key: (self?.leagueDisplaying.key ?? 0))
-                    
-                }))
-                alert.addAction(UIAlertAction(title: "NO", style: .cancel,handler: nil))
-                self.present(alert, animated: true, completion: nil)
+            let alert : UIAlertController = UIAlertController(title: "Delete League from favourites", message: "ARE YOU SURE TO DELETE?", preferredStyle: .alert)
             
-            
+            alert.addAction(UIAlertAction(title: "YES", style: .default,handler: { [weak self] action in
+                print("delete begin")
+                print("heart fill")
+                let img = UIImage(systemName: "heart")
+                self?.favButton.image = img
+                self?.leagueDetailsViewModel.deleteLeague(name: self?.leagueDisplaying.name ?? "", key: (self?.leagueDisplaying.key ?? 0))
+                
+            }))
+            alert.addAction(UIAlertAction(title: "NO", style: .cancel,handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
         
     }
@@ -242,11 +259,11 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 2{
             let teamDetails = self.storyboard?.instantiateViewController(withIdentifier: "teamDetails") as! TeamDetailsViewController
-
+            
             teamDetails.sport = sport
             teamDetails.team = teams[indexPath.row]
-
-                    present(teamDetails, animated: true)
+            
+            present(teamDetails, animated: true)
         }
     }
 }

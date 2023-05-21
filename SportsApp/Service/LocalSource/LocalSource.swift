@@ -58,17 +58,21 @@ class LocalSource: LocalSourceProtocol{
         var leagueL: LeagueLocal?
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueLoc")
         
-        let myPredicate = NSPredicate(format: "name == %@ and key == %f", name, key)
+        let myPredicate = NSPredicate(format: "name == %@ and key == %d", name, key)
         fetchRequest.predicate = myPredicate
         do{
             let leagues = try managedContext.fetch(fetchRequest)
-            let i = leagues[0]
-            leagueL = LeagueLocal(sport: i.value(forKey: "sport") as! String,
-                                  youtube: i.value(forKey: "youtube") as! String,
-                                  name: i.value(forKey: "name") as! String ,
-                                  logo: i.value(forKey: "logo") as! String,
-                                  key: i.value(forKey: "key") as! Int)
-            print("\nGetting league done...\n")
+            if leagues.count > 0{
+                let i = leagues[0]
+                leagueL = LeagueLocal(sport: i.value(forKey: "sport") as! String,
+                                      youtube: i.value(forKey: "youtube") as! String,
+                                      name: i.value(forKey: "name") as! String ,
+                                      logo: i.value(forKey: "logo") as! String,
+                                      key: i.value(forKey: "key") as! Int)
+                print("\nGetting league done...\n")
+            }else{
+                print("no such itemmmmmmå")
+            }
         }catch let error as NSError{
             print("\nerror in fetching all leagues: \(error)\n")
         }
@@ -79,9 +83,9 @@ class LocalSource: LocalSourceProtocol{
     func deleteFromLocal(name: String, key: Int) {
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueLoc")
-       
+        
         let myPredicate = NSPredicate(format: "key == %d", key)
-//        let myPredicate = NSPredicate(format: "name == %@ and key == %d", name, key)
+        //        let myPredicate = NSPredicate(format: "name == %@ and key == %d", name, key)
         fetchRequest.predicate = myPredicate
         do{
             let leagues = try managedContext.fetch(fetchRequest)
@@ -94,8 +98,7 @@ class LocalSource: LocalSourceProtocol{
         }catch let error as NSError{
             print("\nerror in deleteting a league : \(error)\n")
         }
-        
-        
+    
     }
     
 }

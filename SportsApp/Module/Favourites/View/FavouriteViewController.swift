@@ -9,7 +9,7 @@ import UIKit
 
 class FavouriteViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegateFlowLayout {
     
- 
+    
     @IBOutlet weak var favouriteTable: UITableView!
     
     var leagues: [LeagueLocal] = []
@@ -17,11 +17,11 @@ class FavouriteViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         favouriteViewModel = FavouriteViewModel(localSource: LocalSource())
-       
-        let imgNoItems = UIImageView(frame: CGRect(x: self.view.frame.width/3, y: self.view.frame.height/3, width: self.view.frame.width/3 + 50, height: self.view.frame.height/3))
+        
+        let imgNoItems = UIImageView(frame: CGRect(x: 0, y: (self.view.frame.height - self.view.frame.width)/2, width: self.view.frame.width , height: self.view.frame.width ))
         imgNoItems.image = UIImage(systemName: "star.slash")
         self.view.addSubview(imgNoItems)
-     
+        
         favouriteTable.register(UINib(nibName: "LeagueTableViewCell", bundle: nil), forCellReuseIdentifier: "leagueCell")
         favouriteViewModel.refreshFavouriteLeagues = {
             [weak self] in
@@ -43,7 +43,7 @@ class FavouriteViewController: UIViewController, UITableViewDataSource, UITableV
         let _ = favouriteViewModel.getLeagues()
         
     }
- 
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return leagues.count
     }
@@ -71,24 +71,12 @@ class FavouriteViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let leagueDetails = self.storyboard?.instantiateViewController(withIdentifier: "detailsOfLeague") as! LeagueDetailsViewController
         leagueDetails.modalPresentationStyle = .fullScreen
-   
+        
         leagueDetails.img = UIImage(systemName: "heart.fill")
         leagueDetails.sport = leagues[indexPath.row].sport
         leagueDetails.leagueID = leagues[indexPath.row].key
         leagueDetails.leagueDisplaying = LeagueLocal(sport: leagues[indexPath.row].sport , youtube: "", name: leagues[indexPath.row].name , logo: leagues[indexPath.row].logo , key: leagues[indexPath.row].key )
         present(leagueDetails, animated: true)
-        
-        
-        
-//        favouriteViewModel.returnFavouriteLeague = {
-//            [weak self] in
-//            DispatchQueue.main.async {
-//                print("selected item is \(self?.favouriteViewModel.league?.name ?? "")")
-//            }
-//
-//        }
-//        let _ = favouriteViewModel.getSelectedLeague(name: leagues[indexPath.row].name,
-//                                                     key: self.leagues[indexPath.row].key )
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -105,8 +93,5 @@ class FavouriteViewController: UIViewController, UITableViewDataSource, UITableV
         alert.addAction(UIAlertAction(title: "NO", style: .cancel,handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-    
-   
-  
     
 }
