@@ -32,16 +32,59 @@ class LeagueDetailsViewModel{
     }
     
     func getUpComingEvents(){
-        Network.getData(path: "", sport: sport ?? "") { [weak self] (myResponse: EventResponse!) in
+        let currentDate = Date()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale(identifier: "en_US")
+
+        let formattedDate = dateFormatter.string(from: currentDate)
+        
+        print("Current date: \(formattedDate)")
+        var dateComponents = DateComponents()
+        dateComponents.year = 1
+
+        let calendar = Calendar.current
+        let newDate = calendar.date(byAdding: dateComponents, to: currentDate)
+
+        let nextDateFormatter = DateFormatter()
+        nextDateFormatter.dateFormat = "yyyy-MM-dd"
+        nextDateFormatter.locale = Locale(identifier: "en_US")
+        var newFormattedDate = "2025-05-27"
+        if let newDate = newDate{
+            newFormattedDate = nextDateFormatter.string(from: newDate)
+        }
+        Network.getData(path: "Fixtures&leagueId=\(4)&from=\(formattedDate)&to=\(newFormattedDate)", sport: sport ?? "") { [weak self] (myResponse: EventResponse!) in
              print("upcoming events done")
             self?.upComingEvents = myResponse.result
         }
         
     }
     func getLatestEvents(){
+        let currentDate = Date()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale(identifier: "en_US")
+
+        let formattedDate = dateFormatter.string(from: currentDate)
         
-        Network.getData(path: "", sport: sport ?? "") { [weak self] (myResponse: EventResponse!) in
+        var dateComponents = DateComponents()
+        dateComponents.year = -1
+
+        let calendar = Calendar.current
+        let newDate = calendar.date(byAdding: dateComponents, to: currentDate)
+
+        let nextDateFormatter = DateFormatter()
+        nextDateFormatter.dateFormat = "yyyy-MM-dd"
+        nextDateFormatter.locale = Locale(identifier: "en_US")
+        var newFormattedDate = "2025-05-27"
+        if let newDate = newDate{
+            newFormattedDate = nextDateFormatter.string(from: newDate)
+        }
+        Network.getData(path: "Fixtures&leagueId=\(4)&from=\(newFormattedDate)&to=\(formattedDate)", sport: sport ?? "") { [weak self] (myResponse: EventResponse!) in
              print("latest events done")
+            print(myResponse.result.count)
             self?.latestEvents = myResponse.result
         }
     }
