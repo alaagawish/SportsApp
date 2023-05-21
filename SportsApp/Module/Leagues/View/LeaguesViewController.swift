@@ -32,7 +32,7 @@ class LeaguesViewController: UIViewController, UITableViewDataSource, UITableVie
         leagueViewModel.getData()
     }
     
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return leagues.count
     }
@@ -41,22 +41,29 @@ class LeaguesViewController: UIViewController, UITableViewDataSource, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "leagueCell", for: indexPath) as! LeagueTableViewCell
         
         cell.leagueName.text = leagues[indexPath.row].leagueName
-                 
+        
         let url = URL(string: leagues[indexPath.row].leagueLogo ?? "")
         cell.leagueImage.kf.setImage(with: url,
-                              placeholder: UIImage(named: "cup"))
+                                     placeholder: UIImage(named: "noImg"))
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width, height: 50)
     }
-  
-
+    
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(70)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "leagueDetails", sender: nil)
+        //        self.performSegue(withIdentifier: "leagueDetails", sender: nil)
+        let leagueDetails = self.storyboard?.instantiateViewController(withIdentifier: "detailsOfLeague") as! LeagueDetailsViewController
+        leagueDetails.modalPresentationStyle = .fullScreen
+        //        leagueDetails.modalTransitionStyle = .crossDissolve
+        leagueDetails.sport = sport
+        leagueDetails.leagueID = leagues[indexPath.row].leagueKey
+        present(leagueDetails, animated: true)
     }
+    
 }

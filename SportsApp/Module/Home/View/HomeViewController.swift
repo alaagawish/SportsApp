@@ -8,11 +8,11 @@
 import UIKit
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
+    
     let sports = [Sport(name: "Football", image: "football"),
-                    Sport(name: "Basketball", image: "basketball"),
-                    Sport(name: "Cricket", image: "cricket"),
-                    Sport(name: "Tennis", image: "tennis")]
+                  Sport(name: "Basketball", image: "basketball"),
+                  Sport(name: "Cricket", image: "cricket"),
+                  Sport(name: "Tennis", image: "tennis")]
     @IBOutlet weak var myCollection: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return sports.count
     }
@@ -44,16 +44,16 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(sports[indexPath.row].name.lowercased())
-         
+        
         if  let leagues = self.storyboard?.instantiateViewController(withIdentifier:  "leagues") as? LeaguesViewController{
             
             leagues.sport = sports[indexPath.row].name.lowercased()
-             
+            
             navigationController?.pushViewController(leagues, animated: true)
-           
+            
         }
         
     }
-
+    
 }
 

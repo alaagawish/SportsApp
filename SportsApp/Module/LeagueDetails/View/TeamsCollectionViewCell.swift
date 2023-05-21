@@ -21,6 +21,6 @@ class TeamsCollectionViewCell: UICollectionViewCell {
         
         let url = URL(string: teamLogo)
         self.teamLogo.kf.setImage(with: url,
-                             placeholder: UIImage(named: "cup"))
+                                  placeholder: UIImage(named: "noImg"))
     }
 }

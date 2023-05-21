@@ -8,11 +8,13 @@
 import UIKit
 
 class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
+    
     @IBOutlet weak var collectionDetails: UICollectionView!
     var leagueDetailsViewModel: LeagueDetailsViewModel!
     var upComing: [Event] = []
     var latest: [Event] = []
+    var sport: String!
+    var leagueID: Int!
     var teams: [Int] = []
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,17 +32,16 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
                 return self.drawTeamsSection()
             }
         }
-       
+        
         collectionDetails.setCollectionViewLayout(layout, animated: true)
- 
-       
-        //TODO save sport in user defaults
-        leagueDetailsViewModel = LeagueDetailsViewModel(sport: "football")
-
+             
+        print("\n\n\n\n\\n\n\n\n\\n\n\n\n\n\n\n\n\n\n\n\n\nwwwwww")
+        leagueDetailsViewModel = LeagueDetailsViewModel(sport: sport,leagueId: leagueID)
+        
         leagueDetailsViewModel.upComingArrayToViewController = {
             [weak self ] in
             DispatchQueue.main.async {
- 
+                
                 self?.upComing = self?.leagueDetailsViewModel.upComingEvents ?? []
                 print(self?.upComing[0].eventDay ?? "cant get date in upcoming")
                 self?.collectionDetails.reloadData()
@@ -50,7 +51,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         leagueDetailsViewModel.latestArrayToViewController = {
             [weak self ] in
             DispatchQueue.main.async {
- 
+                
                 self?.latest = self?.leagueDetailsViewModel.latestEvents ?? []
                 print(self?.latest[0].eventDay ?? "cant get date in latest")
                 self?.collectionDetails.reloadData()
@@ -62,15 +63,13 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
     func drawUpComingSection() -> NSCollectionLayoutSection{
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension:  .absolute(170))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension:  .absolute(UIScreen.main.bounds.height/5))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 32)
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 16, trailing: 0)
-         // Set the header size
-        
-        
+   
         section.visibleItemsInvalidationHandler = { (items, offset, environment) in
             items.forEach { item in
                 let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
@@ -81,9 +80,9 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
             }
         }
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(30)) // Set the header size
-            let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-    
-            section.boundarySupplementaryItems = [headerSupplementary]
+        let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        
+        section.boundarySupplementaryItems = [headerSupplementary]
         
         return section
     }
@@ -91,7 +90,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension:  .absolute(150))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension:  .absolute(UIScreen.main.bounds.height/5))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 32)
@@ -100,16 +99,16 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 16, trailing: 0)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(25)) // Set the header size
-            let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-    
-            section.boundarySupplementaryItems = [headerSupplementary]
+        let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        
+        section.boundarySupplementaryItems = [headerSupplementary]
         return section
         
     }
     func drawTeamsSection() -> NSCollectionLayoutSection{
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension:  .absolute(110))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension:  .absolute(UIScreen.main.bounds.height/6))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 32)
         let section = NSCollectionLayoutSection(group: group)
@@ -126,9 +125,9 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
             }
         }
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(25)) // Set the header size
-            let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-    
-            section.boundarySupplementaryItems = [headerSupplementary]
+        let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        
+        section.boundarySupplementaryItems = [headerSupplementary]
         return section
     }
     
@@ -139,7 +138,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
             return latest.count
         }else{
             return 5
-//            return teams.count
+            //            return teams.count
         }
     }
     
@@ -152,7 +151,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
             
         }else if indexPath.section == 1{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath) as! EventCollectionViewCell
-          
+            
             let event = latest[indexPath.row]
             cell.setValuesLatest(date: event.eventDay ?? "", time: event.eventTime ?? "", firstName: event.eventHomeTeam ?? "", secondName: event.eventAwayTeam ?? "", firstLogo: event.homeTeamLogo ?? "", secondLogo: event.awayTeamLogo ?? "", result: event.finalResult ?? "")
             return cell
@@ -165,32 +164,32 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-       
+        
         if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! HeaderCollectionReusableView
             
             if indexPath.section == 0 {
-               
+                
                 header.headerTitle.text = "Up Coming Events"
             }else if indexPath.section == 1{
                 header.headerTitle.text = "Latest Results"
             }else{
                 header.headerTitle.text = "Teams"
             }
-        
+            
             
             return header
         }
         return UICollectionReusableView()
     }
-
-
+    
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-         
+        
         return 3
     }
     
-
+    
     @IBAction func favButton(_ sender: UIBarButtonItem) {
         
         

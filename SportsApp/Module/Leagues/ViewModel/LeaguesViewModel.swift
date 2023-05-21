@@ -21,7 +21,7 @@ class LeaguesViewModel{
     func getData(){
         
         Network.getData(path: "Leagues", sport: sport ?? "") { [weak self] (myResponse: MyResponse!) in
-             
+            
             self?.leagues = myResponse.result
         }
     }

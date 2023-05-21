@@ -13,7 +13,7 @@ class SplashViewController: UIViewController {
     let animationView = LottieAnimationView(name:"ball")
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         startAnimation()
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
             self.performSegue(withIdentifier: "OpenHome", sender: nil)
@@ -29,7 +29,7 @@ class SplashViewController: UIViewController {
         animationView.play()
         view.addSubview(animationView)
     }
-
-   
-
+    
+    
+    
 }

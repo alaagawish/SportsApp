@@ -31,10 +31,10 @@ class EventCollectionViewCell: UICollectionViewCell {
         self.secondTeamName.text = secondName
         let urlFirst = URL(string: firstLogo)
         self.firstTeamLogo.kf.setImage(with: urlFirst,
-                             placeholder: UIImage(named: "cup"))
+                                       placeholder: UIImage(named: "noImg"))
         let url = URL(string: secondLogo)
         self.secondTeamLogo.kf.setImage(with: url,
-                             placeholder: UIImage(named: "cup"))
+                                        placeholder: UIImage(named: "noImg"))
         self.result.isHidden = true
     }
     
@@ -45,10 +45,10 @@ class EventCollectionViewCell: UICollectionViewCell {
         self.secondTeamName.text = secondName
         let urlFirst = URL(string: firstLogo)
         self.firstTeamLogo.kf.setImage(with: urlFirst,
-                             placeholder: UIImage(named: "cup"))
+                                       placeholder: UIImage(named: "noImg"))
         let url = URL(string: secondLogo)
         self.secondTeamLogo.kf.setImage(with: url,
-                             placeholder: UIImage(named: "cup"))
+                                        placeholder: UIImage(named: "noImg"))
         self.result.text = result
         self.result.isHidden = false
         
