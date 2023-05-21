@@ -223,12 +223,13 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         dismiss(animated: true)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let teamDetails = self.storyboard?.instantiateViewController(withIdentifier: "teamDetails") as! TeamDetailsViewController
-        teamDetails.modalPresentationStyle = .fullScreen
-        teamDetails.modalTransitionStyle = .crossDissolve
-        teamDetails.sport = sport
-        teamDetails.team = teams[indexPath.row]
-        present(teamDetails, animated: true)
+        if indexPath.section == 2{
+            let teamDetails = self.storyboard?.instantiateViewController(withIdentifier: "teamDetails") as! TeamDetailsViewController
+
+            teamDetails.sport = sport
+            teamDetails.team = teams[indexPath.row]
+
+                    present(teamDetails, animated: true)
+        }
     }
 }

@@ -16,13 +16,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sport" translatesAutoresizingMaskIntoConstraints="NO" id="60B-rS-CRr">
-                                <rect key="frame" x="0.0" y="59" width="393" height="793"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <constraints>
                             <constraint firstItem="60B-rS-CRr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2lF-rT-lB1"/>
-                            <constraint firstItem="60B-rS-CRr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="VdS-zk-EOo"/>
+                            <constraint firstItem="60B-rS-CRr" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="O8v-hF-lgB"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="60B-rS-CRr" secondAttribute="trailing" id="jf6-Mg-39x"/>
                             <constraint firstAttribute="bottom" secondItem="60B-rS-CRr" secondAttribute="bottom" id="tJk-tr-AHC"/>
                         </constraints>

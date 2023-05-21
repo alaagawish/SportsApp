@@ -21,6 +21,7 @@ class TeamDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       
         teamName.text = team.teamName
         let url = URL(string: team.teamLogo ?? "")
         teamImage.kf.setImage(with: url,
@@ -28,6 +29,5 @@ class TeamDetailsViewController: UIViewController {
         teamSportName.text = sport.capitalized + " Team"
         
     }
-    
     
 }
