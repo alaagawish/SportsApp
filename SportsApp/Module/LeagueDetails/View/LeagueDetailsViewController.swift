@@ -68,6 +68,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
                     self?.imgNoItems.isHidden = false
                 }else{
                     self?.imgNoItems.isHidden = true
+                   
                     self?.collectionDetails.isHidden = false
                 }
                 self?.collectionDetails.reloadData()
@@ -176,6 +177,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
                 self.teams.append(Team(teamLogo: item.homeTeamLogo, teamName: item.eventHomeTeam, teamKey: item.homeTeamKey))
             }
             teams = Array(Set(teams))
+            print("\(teams.count)")
             return teams.count
         }
     }
