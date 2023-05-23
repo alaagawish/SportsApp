@@ -18,7 +18,7 @@ class LeaguesViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        leagueViewModel = LeaguesViewModel(sport: sport ?? "football")
+        leagueViewModel = LeaguesViewModel(sport: sport ?? "football", network: Network())
         
         leaguesTable.register(UINib(nibName: "LeagueTableViewCell", bundle: nil), forCellReuseIdentifier: "leagueCell")
         leagueViewModel.passArrayToViewController = {

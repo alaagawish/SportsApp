@@ -44,7 +44,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
         
         collectionDetails.setCollectionViewLayout(layout, animated: true)
         
-        leagueDetailsViewModel = LeagueDetailsViewModel(sport: sport,leagueId: leagueID, localSource: LocalSource())
+        leagueDetailsViewModel = LeagueDetailsViewModel(sport: sport,leagueId: leagueID, localSource: LocalSource(), network: Network())
         
         leagueDetailsViewModel.upComingArrayToViewController = {
             [weak self ] in
@@ -68,7 +68,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate, U
                     self?.imgNoItems.isHidden = false
                 }else{
                     self?.imgNoItems.isHidden = true
-                   
+                    
                     self?.collectionDetails.isHidden = false
                 }
                 self?.collectionDetails.reloadData()

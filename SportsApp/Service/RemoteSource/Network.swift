@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class Network: NetworkProtocol{
-    static func getData<T>(path: String,sport: String, handler: @escaping (T?) -> Void) where T : Decodable {
+     func getData<T>(path: String,sport: String, handler: @escaping (T?) -> Void) where T : Decodable {
         AF.request("https://apiv2.allsportsapi.com/\(sport)/?APIkey=56eb8e9b98b07e7b09bee4217bb82621b88ff72ad858cb1bbd8eac1ff36db88b&met=\(path)", method: .get).responseDecodable(of: T.self) { response in
             
             switch response.result {

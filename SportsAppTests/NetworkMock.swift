@@ -11,14 +11,15 @@ import Foundation
 
 class NetworkMock: NetworkProtocol{
     
-    
-    static var isSuccess: Bool = true
+    var isSuccess: Bool!
+    init(isSuccess: Bool!) {
+        self.isSuccess = isSuccess
+    }
     var myResponse = MyResponse(success: 1, result: [League(),League(),League()])
     
-    static func getData<T>(path: String, sport: String, handler: @escaping (T?) -> Void) where T : Decodable {
+    func getData<T>(path: String, sport: String, handler: @escaping (T?) -> Void) where T : Decodable {
         
         if isSuccess{
-            print("success")
             handler(MyResponse(success: 1, result: [League(),League(),League()]) as? T)
         }else{
             handler(nil)

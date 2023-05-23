@@ -10,6 +10,7 @@ import Foundation
 class LeagueDetailsViewModel{
     var sport: String?
     var leagueId: Int?
+    var network:NetworkProtocol!
     var upComingArrayToViewController: (()->()) = {}
     var upComingEvents: [Event]!{
         didSet{
@@ -22,17 +23,13 @@ class LeagueDetailsViewModel{
             latestArrayToViewController()
         }
     }
-    var teamArrayToViewController: (()->()) = {}
-    var teams: [Event]!{
-        didSet{
-            teamArrayToViewController()
-        }
-    }
+    
     var localSource: LocalSourceProtocol
-    init(sport: String, leagueId: Int, localSource: LocalSourceProtocol) {
+    init(sport: String, leagueId: Int, localSource: LocalSourceProtocol,network: NetworkProtocol) {
         self.localSource = localSource
         self.sport = sport
         self.leagueId = leagueId
+        self.network = network
     }
     
     func getUpComingEvents(){
@@ -58,12 +55,15 @@ class LeagueDetailsViewModel{
         if let newDate = newDate{
             newFormattedDate = nextDateFormatter.string(from: newDate)
         }
-        Network.getData(path: "Fixtures&leagueId=\(leagueId ?? 4)&from=\(formattedDate)&to=\(newFormattedDate)", sport: sport ?? "") { [weak self] (myResponse: EventResponse!) in
+        
+        network.getData(path: "Fixtures&leagueId=\(leagueId!)&from=\(formattedDate)&to=\(newFormattedDate)", sport: sport!) { [weak self] (myResponse: EventResponse?) in
+            
             print("upcoming events done")
-            self?.upComingEvents = myResponse.result
+            self?.upComingEvents = myResponse?.result
         }
         
     }
+    
     func getLatestEvents(){
         let currentDate = Date()
         
@@ -86,10 +86,10 @@ class LeagueDetailsViewModel{
         if let newDate = newDate{
             newFormattedDate = nextDateFormatter.string(from: newDate)
         }
-        Network.getData(path: "Fixtures&leagueId=\(leagueId ?? 4)&from=\(newFormattedDate)&to=\(formattedDate)", sport: sport ?? "") { [weak self] (myResponse: EventResponse!) in
+        network.getData(path: "Fixtures&leagueId=\(leagueId!)&from=\(newFormattedDate)&to=\(formattedDate)", sport: sport!) { [weak self] (myResponse: EventResponse?) in
             print("latest events done")
-            print(myResponse.result.count)
-            self?.latestEvents = myResponse.result
+            // print(myResponse.result.count)
+            self?.latestEvents = myResponse?.result
         }
     }
     
@@ -102,6 +102,7 @@ class LeagueDetailsViewModel{
         
         return localSource.getLeagueFromLocal(name: name, key: key) ?? nil
     }
+    
     func addToFav(l: LeagueLocal){
         localSource.insertLeague(l: l)
     }
