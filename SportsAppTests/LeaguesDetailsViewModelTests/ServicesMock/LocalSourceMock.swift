@@ -7,7 +7,7 @@
 
 import Foundation
 @testable import SportsApp
-class LocalSourceTests: LocalSourceProtocol{
+class LocalSourceMock: LocalSourceProtocol{
     var leagues: [LeagueLocal]!
     init(){
         leagues = [ LeagueLocal(sport: "football", youtube: "", name: "sport1", logo: "sport1", key: 0),

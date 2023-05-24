@@ -29,7 +29,7 @@ final class NetworkMockTest: XCTestCase {
     
     func testGetDataMockFailCase() {
         networkMock = NetworkMock(isSuccess: false)
-            networkMock.getData(path: "", sport: "") { (myResult: MyResponse!) in
+        networkMock.getData(path: "", sport: "") { (myResult: MyResponse!) in
             XCTAssertNil(myResult)
         }
     }

@@ -14,8 +14,8 @@ final class LeagueDetailsViewModelTests: XCTestCase {
     var network: NetworkProtocol!
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        network = NetworkMock(isSuccess: true)
-        leagueDetails = LeagueDetailsViewModel(sport: "football", leagueId: 4, localSource: LocalSourceTests(),network: network)
+        network = RemoteSourceMock(isSuccess: true)
+        leagueDetails = LeagueDetailsViewModel(sport: "football", leagueId: 4, localSource: LocalSourceMock(),network: network)
         leagueDetails?.sport = "football"
         leagueDetails?.leagueId = 4
         
@@ -30,17 +30,26 @@ final class LeagueDetailsViewModelTests: XCTestCase {
     func testGetLatestEvents(){
         leagueDetails?.getLatestEvents()
         
-        XCTAssertNil(leagueDetails?.latestEvents)
+        XCTAssertNotNil(leagueDetails?.latestEvents)
+        XCTAssertEqual(leagueDetails?.latestEvents.count, 3)
         
     }
-    //
-    func testGetUpcomingEvents(){
-        leagueDetails?.getUpComingEvents()
-        
-        XCTAssertNil(leagueDetails?.upComingEvents)
+    func testGetLatestEventsCount(){
+        leagueDetails?.getLatestEvents()
+        XCTAssertEqual(leagueDetails?.latestEvents.count, 3)
         
     }
     
+    func testGetUpcomingEvents(){
+        leagueDetails?.getUpComingEvents()
+        XCTAssertNotNil(leagueDetails?.upComingEvents)
+        
+    }
+    func testGetUpcomingEventsCount(){
+        leagueDetails?.getUpComingEvents()
+        XCTAssertEqual(leagueDetails?.upComingEvents.count, 3)
+        
+    }
     func testDeleteLeague(){
         let countOfFav = leagueDetails?.localSource.getDataFromLocal().count
         leagueDetails?.deleteLeague(name: "sport2", key: 1)
